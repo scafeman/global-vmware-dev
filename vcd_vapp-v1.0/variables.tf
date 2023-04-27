@@ -39,7 +39,7 @@ variable "vdc_name" {
   default     = ""
 }
 
-variable "vapp_name" {
-  type = string
-  default = "Production Application vApp"
+variable "vapp_names" {
+  type    = list(string)
+  default = ["vApp-01", "vApp-02"]
 }
