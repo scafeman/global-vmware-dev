@@ -73,12 +73,12 @@ resource "vcd_vapp_vm" "vm" {
   }
 
   network {
-    type          = var.network_type
-    adapter_type  = var.network_adapter_type
-    name          = var.vapp_org_network_name
-    is_primary    = true
-
-    ip = var.network_ip_allocation_mode == "DHCP" ? "" : var.network_ip_allocation_mode == "POOL" ? "" : element(var.vm_ips, count.index)
+    type                = var.network_type
+    adapter_type        = var.network_adapter_type
+    name                = var.vapp_org_network_name
+    ip_allocation_mode  = var.network_ip_allocation_mode
+    ip                  = var.network_ip_allocation_mode == "DHCP" ? "" : var.network_ip_allocation_mode == "POOL" ? "" : element(var.vm_ips, count.index)
+    is_primary          = true
   }
 
   customization {
