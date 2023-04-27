@@ -153,7 +153,7 @@ variable "network_cidr" {
 
 variable "vm_ips" {
   type    = list(string)
-  default = ["192.168.0.10", "192.168.0.10"]
+  default = ["192.168.0.10", "192.168.0.11"]
 }
 
 
