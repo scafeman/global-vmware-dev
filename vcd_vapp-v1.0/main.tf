@@ -14,8 +14,8 @@ data "vcd_vdc_group" "vdc_group" {
 }
 
 resource "vcd_vapp" "vapp" {
-  for_each = { for name in var.vapp_names: name => {} }  # create a map with keys as vapp_names list elements
-  name     = each.key  # use each.key to set vapp name
+  for_each = { for name in var.vapp_names: name => {} }
+  name     = each.key
   org      = var.vdc_org_name
   vdc      = var.vdc_name
 }
