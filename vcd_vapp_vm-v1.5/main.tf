@@ -73,7 +73,7 @@ resource "vcd_vapp_vm" "vm" {
   }
 
   dynamic "network" {
-    for_each = [var.vm_ips[0]]
+    for_each = var.vm_ips
 
     content {
       type          = var.network_type
@@ -81,7 +81,7 @@ resource "vcd_vapp_vm" "vm" {
       name          = var.vapp_org_network_name
       is_primary    = true
 
-      ip = var.network_ip_allocation_mode == "dhcp" ? "" : var.network_ip_allocation_mode == "pool" ? "" : network.value
+      ip = var.network_ip_allocation_mode == "dhcp" ? "" : var.network_ip_allocation_mode == "pool" ? "" : network.value[count.index]
     }
   }
 
