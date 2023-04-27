@@ -72,17 +72,13 @@ resource "vcd_vapp_vm" "vm" {
     }
   }
 
-  dynamic "network" {
-    for_each = var.vm_ips
+  network {
+    type          = var.network_type
+    adapter_type  = var.network_adapter_type
+    name          = var.vapp_org_network_name
+    is_primary    = true
 
-    content {
-      type          = var.network_type
-      adapter_type  = var.network_adapter_type
-      name          = var.vapp_org_network_name
-      is_primary    = true
-
-      ip = var.network_ip_allocation_mode == "dhcp" ? "" : var.network_ip_allocation_mode == "pool" ? "" : network.value[count.index]
-    }
+    ip = var.network_ip_allocation_mode == "DHCP" ? "" : var.network_ip_allocation_mode == "POOL" ? "" : element(var.vm_ips, count.index)
   }
 
   customization {
