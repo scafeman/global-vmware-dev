@@ -151,11 +151,11 @@ variable "network_cidr" {
   default = "192.168.0.0/24"
 }
 
-variable "is_windows_image" {
-  type = bool
-  default = false
-  
+variable "vm_ips" {
+  type    = list(string)
+  default = ["192.168.0.10", "192.168.0.10"]
 }
+
 
 variable "vm_customization_force" {
   description = "Warning. Setting to true will cause the VM to reboot on every apply operation. This field works as a flag and triggers force customization when true during an update (terraform apply) every time. It never complains about a change in statefile. Can be used when guest customization is needed after VM configuration (e.g. NIC change, customization options change, etc.) and then set back to false. Note. It will not have effect when power_on field is set to false."

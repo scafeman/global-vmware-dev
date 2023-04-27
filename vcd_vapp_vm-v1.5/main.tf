@@ -72,13 +72,17 @@ resource "vcd_vapp_vm" "vm" {
     }
   }
 
-  network {
-    type                  = var.network_type
-    adapter_type          = var.network_adapter_type
-    name                  = var.vapp_org_network_name
-    ip_allocation_mode    = var.network_ip_allocation_mode
-    ip                    = "${cidrhost(var.network_cidr, count.index + 50)}"
-    is_primary            = true
+  dynamic "network" {
+    for_each = var.vm_ips
+
+    content {
+      type          = var.network_type
+      adapter_type  = var.network_adapter_type
+      name          = var.vapp_org_network_name
+      is_primary    = true
+
+      ip = var.network_ip_allocation_mode == "dhcp" ? "" : var.network_ip_allocation_mode == "pool" ? "" : network.value
+    }
   }
 
   customization {
