@@ -1,100 +1,51 @@
-## Virtual Application VM Terraform Module
-This Terraform module will deploy a vApp and "X" number of Virtual Machines into an existing VMware Cloud Director (VCD) Environment.  This module can be used to provsion a new vApp and Virtual Machines into Rackspace Technology SDDC Flex VCD Data Center Regions.
+## Virtual Application Terraform Module
+
+This Terraform module will deploy Virtual Applications (vApps) into an existing VMware Cloud Director (VCD) environment using the `vmware/vcd` provider. This module can be used to provision new vApps into Rackspace Technology SDDC Flex VCD Data Center Regions.
 
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| terraform | >= 1.2 |
-| vcd | >= 3.8.2 |
+| Name      | Version |
+|-----------|---------|
+| terraform | >= 1.2  |
+| vcd       | >= 3.8.2 |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [vcd_vapp_vm](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/resources/vapp_vm) | resource |
+| Name                                                             | Type      |
+|------------------------------------------------------------------|-----------|
+| [vcd_vdc_group](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/data-sources/vdc_group) | data source |
+| [vcd_vapp](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/resources/vapp) | resource   |
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|----------|
-| vdc_org_name | Name of the Data Center Group Organization | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name>"` | Yes |
-| vdc_group_name | Name of the Data Center Group | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | Yes |
-| vdc_name | Cloud Director VDC Name | string | `"Virtual Data Center Name Format: <Account_Number>-<Region>-<Segment Name>"` | Yes |
+| Name                          | Description                                                          | Type   | Default           | Required |
+|-------------------------------|----------------------------------------------------------------------|--------|-------------------|----------|
+| vdc_group_name | The name of the Data Center Group in VCD | string | `""` | Yes |
+| vdc_org_name | The name of the Data Center Group Organization in VCD | string | `""` | Yes |
+| vdc_name | The name of the VDC in VCD | string | `""` | Yes |
+| vapp_names | The names of the vApps to be created | list | `["vApp-01", "vApp-02"]` | No |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| vm_names | An array of formatted VM names. |
-
+| Name         | Description             |
+|--------------|-------------------------|
+| vapp_names | The names of the Virtual Applications (vApps) |
 
 ## Example Usage
-This is an example of a main.tf file that would use the "github.com/global-vmware/vcd_vapp_vm" Module Source to create a Virtual Application and it's associated Virtual Machines.
 
-The Terraform code example for the main.tf file is below:
+This is an example of a `main.tf` file that uses the `"github.com/global-vmware/vcd_vapp_vm"` Module source to create vApps in a VMware Cloud Director environment:
 
 ```terraform
-module "vcd_vapp_vm" {
-  source                            = "github.com/global-vmware/vcd_vapp_vm.git?ref=v1.4.0"
+module "vcd_vapp" {
+  "github.com/global-vmware/vcd_vapp.git?ref=v1.1.0"
   
   vdc_org_name                      = "<US1-VDC-ORG-NAME>"
   vdc_group_name                    = "<US1-VDC-GRP-NAME>"
   vdc_name                          = "<US1-VDC-NAME>"
-  vcd_edgegateway_name              = "<US1-VDC-EDGE-NAME>"
-  catalog_name                      = "<US1-CATALOG-NAME>"
-  catalog_template_name             = "Ubuntu 22.04"
-  vapp_org_network_name             = "US1-Segment-01"
-  network_cidr                      = "172.16.0.0/24"
-  network_ip_allocation_mode        = "MANUAL"
 
-  vm_count                          = 2
-  vm_sizing_policy_name             = "gp4.8"
-
-  vapp_name                         = "My Production Application"
-  vm_name_environment               = "Prod"
-  vm_app_name                       = "App"
-  vm_app_role                       = "Web Server"
-  vm_computer_name_environment      = "pd"
-  vm_computer_name_app_name         = "app"
-  vm_computer_name_role             = "web"
-
-  vm_metadata_entries = [
-    {
-      key         = "Cost Center"
-      value       = "IT Department - 1001"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Operating System"
-      value       = "Ubuntu Linux (64-Bit)"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Server Role"
-      value       = "Web Server"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Build Date"
-      value       = timestamp()
-      type        = "MetadataDateTimeValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Built By"
-      value       = "Build Engineering Team"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    }    
+  vapp_names = [
+    "vApp-01",
+    "vApp-02"
   ]
 }
-```
+

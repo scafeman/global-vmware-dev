@@ -79,7 +79,7 @@ This Terraform module will deploy a vApp and "X" number of Virtual Machines into
 | vm_sizing_policy_name | The name of the sizing policy retrieved from the VCD instance. |
 
 ## Example Usage
-This is an example of a main.tf file that would use the "github.com/global-vmware/vcd_vapp_vm" Module Source to create a Virtual Application and it's associated Virtual Machines.
+This is an example of a `main.tf` file that would use the `"github.com/global-vmware/vcd_vapp_vm"` Module Source to create a Virtual Application and it's associated Virtual Machines.
 
 The Terraform code example for the main.tf file is below:
 
