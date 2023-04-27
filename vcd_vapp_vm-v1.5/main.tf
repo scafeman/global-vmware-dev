@@ -73,7 +73,7 @@ resource "vcd_vapp_vm" "vm" {
   }
 
   dynamic "network" {
-    for_each = var.vm_ips
+    for_each = [var.vm_ips[0]]
 
     content {
       type          = var.network_type
