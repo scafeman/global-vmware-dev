@@ -37,19 +37,19 @@ data "vcd_catalog_vapp_template" "template" {
   name                    = var.catalog_template_name
 }
 
-resource "vcd_vapp" "vapp" {
+data "vcd_vapp" "vapp" {
   name                    = var.vapp_name
   org                     = var.vdc_org_name
   vdc                     = var.vdc_name
 }
 
 resource "vcd_vapp_org_network" "vappOrgNet" {
-  vapp_name               = "${vcd_vapp.vapp.name}"
+  vapp_name               = data.vcd_vapp.vapp.name
   org_network_name        = data.vcd_network_routed_v2.segment.name
 }
 
 resource "vcd_vapp_vm" "vm" {
-  vapp_name               = "${vcd_vapp.vapp.name}"
+  vapp_name               = data.vcd_vapp.vapp.name
   name                    = format("%s %s %s %02d", var.vm_name_environment, var.vm_app_name, var.vm_app_role, count.index + 1)
   computer_name           = format("%s-%s-%s%02d", var.vm_computer_name_environment, var.vm_computer_name_app_name, var.vm_computer_name_role, count.index + 1)
   vapp_template_id        = data.vcd_catalog_vapp_template.template.id
@@ -59,20 +59,6 @@ resource "vcd_vapp_vm" "vm" {
   cpus                    = var.vm_min_cpu
 
   count                   = var.vm_count == 0 ? 1 : var.vm_count
-
-  dynamic "override_template_disk" {
-    for_each = var.use_override_template_disk == true ? data.vcd_catalog_vapp_template.template.disks : []
-
-    content {
-      bus_type        = override_template_disk.value.bus_type
-      size_in_mb      = var.use_override_template_disk == true ? var.disk_sizes_mb[count.index] : null
-      bus_number      = override_template_disk.value.bus_number
-      unit_number     = override_template_disk.value.unit_number
-      storage_profile = var.use_override_template_disk == true ? var.disk_storage_profile[count.index] : null
-    }
-  }
-
-
 
   dynamic "metadata_entry" {
     for_each              = var.vm_metadata_entries
@@ -112,8 +98,6 @@ resource "vcd_vapp_vm" "vm" {
     join_domain_account_ou              = var.vm_customization_join_domain_account_ou
     initscript                          = var.vm_customization_initscript
   }
-  
-  depends_on = [vcd_vapp.vapp]
 }
 
 
