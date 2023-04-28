@@ -246,23 +246,3 @@ variable "vm_customization_initscript" {
   type        = string
   default     = null
 }
-
-variable "disk_sizes_mb" {
-  description = "A list of disk sizes in MB"
-  default = null
-  }
-
-variable "disk_iops" {
-  description = "IOPS for each disk"
-  default     = null
-}
-
-variable "disk_storage_profile" {
-  description = "A list of storage profiles, one for each disk"
-  default     = null
-}
-
-variable "use_override_template_disk" {
-  type = bool
-  default = false
-}
