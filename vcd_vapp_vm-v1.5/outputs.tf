@@ -13,10 +13,10 @@ output "all_vm_info" {
   value = {
     for vm in vcd_vapp_vm.vm :
     vm.name => {
-      ip              = vm.network[*].ip
-      computer_name   = vm.computer_name
-      metadata        = vm.metadata_entry
-      sizing_policy   = data.vcd_vm_sizing_policy.sizing_policy.name
+      ip                = vm.network[*].ip
+      computer_name     = vm.computer_name
+      metadata_entries  = vm.metadata_entry
+      sizing_policy     = data.vcd_vm_sizing_policy.sizing_policy.name
     }
   }
 }
