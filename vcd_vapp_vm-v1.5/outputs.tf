@@ -1,3 +1,14 @@
+output "vm_info" {
+  value = [
+    for vm in vcd_vapp_vm.this : {
+      name           = vm.name
+      ip_address     = vm.ip
+      computer_name  = vm.computer_name
+      metadata_entries = vm.metadata_entry
+    }
+  ]
+}
+
 output "all_vm_info" {
   value = {
     for vm in vcd_vapp_vm.this :
