@@ -29,7 +29,7 @@ variable "vm_sizing_policy_name" {
 
 variable "vapp_org_network_name" {
   type = string
-  default = "Segment-01"
+  default = ""
 }
 
 variable "catalog_name" {
@@ -148,12 +148,12 @@ variable "network_ip_allocation_mode" {
 
 variable "network_cidr" {
   type = string
-  default = "192.168.0.0/24"
+  default = ""
 }
 
 variable "vm_ips" {
   type    = list(string)
-  default = ["192.168.0.10", "192.168.0.11"]
+  default = ["", ""]
 }
 
 

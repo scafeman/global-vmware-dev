@@ -23,9 +23,9 @@ This Terraform module will deploy Virtual Machines into an existing VMware Cloud
 | vdc_name | Cloud Director VDC Name | string | `"Virtual Data Center Name Format: <Account_Number>-<Region>-<Segment Name>"` | Yes |
 | vcd_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | vm_sizing_policy_name | Cloud Director VM Sizing Policy Name | string | "gp2.4" | No |
-| vapp_org_network_name | Cloud Director vApp Organization Network Name | string | "Segment-01" | No |
-| catalog_name | Cloud Director Catalog Name | string | "" | Yes |
-| catalog_template_name | Cloud Director Catalog Template Name | string | "Ubuntu 22.04" | No |
+| vapp_org_network_name | Cloud Director vApp Organization Network Name | string | "" | Yes |
+| catalog_name | Cloud Director Catalog Name | string | `"VCD Catalog Name Format: <Account_Number>-<Region>-<catalog>"` | Yes |
+| catalog_template_name | Cloud Director Catalog Template Name | string | "" | Yes |
 | vapp_name | Cloud Director vApp Name | string | "" | Yes |
 | vm_name_environment | Environment of the VM | string | "Prod" | No |
 | vm_app_name | Application name of the VM | string | "App" | No |
@@ -41,8 +41,8 @@ This Terraform module will deploy Virtual Machines into an existing VMware Cloud
 | network_type | The type of network adapter to use | string | "org" | No |
 | network_adapter_type | The type of network adapter to use | string | "VMXNET3" | No |
 | network_ip_allocation_mode | The IP address allocation mode | string | "MANUAL" | No |
-| network_cidr | The CIDR notation for the network | string | "192.168.0.0/24" | No |
-| vm_ips | List of IP addresses to assign to VMs | list(string) | `["192.168.0.10", "192.168.0.11"]` | No |
+| network_cidr | The CIDR notation for the network | string | "" | Yes |
+| vm_ips | List of IP addresses to assign to VMs | list(string) | `["", ""]` | Yes |
 | vm_customization_force | Specifies whether to force the customization even if the VM is powered on | bool | false | No |
 | vm_customization_enabled | Specifies whether to enable customization of the VM | bool | true | No |
 | vm_customization_change_sid | Specifies whether to generate a new SID for the Windows VM | bool | false | no |
