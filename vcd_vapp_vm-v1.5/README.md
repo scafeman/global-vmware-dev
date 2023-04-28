@@ -40,9 +40,9 @@ This Terraform module will deploy Virtual Machines into an existing VMware Cloud
 | vm_metadata_entries | List of metadata entries for the VM | list(object({ key = string, value = string, type = string, user_access = string, is_system = bool })) | `[{ key = "Built By", value = "Terraform", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }, { key = "Operating System", value = "Ubuntu Linux (64-Bit)", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }, { key = "Server Role", value = "Web Server", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }]` | No |
 | network_type | The type of network adapter to use | string | "org" | No |
 | network_adapter_type | The type of network adapter to use | string | "VMXNET3" | No |
-| network_ip_allocation_mode | The IP address allocation mode | string | "MANUAL" | No |
+| network_ip_allocation_mode | The IP address allocation mode | string | "POOL" | No |
 | network_cidr | The CIDR notation for the network | string | "" | Yes |
-| vm_ips | List of IP addresses to assign to VMs | list(string) | `["", ""]` | Yes |
+| vm_ips | List of IP addresses to assign to VMs | list(string) | `["", ""]` | No |
 | vm_customization_force | Specifies whether to force the customization even if the VM is powered on | bool | false | No |
 | vm_customization_enabled | Specifies whether to enable customization of the VM | bool | true | No |
 | vm_customization_change_sid | Specifies whether to generate a new SID for the Windows VM | bool | false | no |
@@ -92,13 +92,14 @@ module "vcd_vapp_vm" {
   vdc_name                          = "<US1-VDC-NAME>"
   vcd_edgegateway_name              = "<US1-VDC-EDGE-NAME>"
   catalog_name                      = "<US1-CATALOG-NAME>"
-  catalog_template_name             = "Ubuntu 22.04"
+  catalog_template_name             = "<US1-CATALOG-TEMPLATE-NAME>"
   vapp_org_network_name             = "US1-Segment-01"
   network_cidr                      = "172.16.0.0/24"
   network_ip_allocation_mode        = "MANUAL"
   vm_ips                            = ["172.16.0.10", "172.16.0.11"]
 
   vm_count                          = 2
+  vm_min_cpu                        = 4
   vm_sizing_policy_name             = "gp4.8"
 
   vapp_name                         = "My Production Application"
