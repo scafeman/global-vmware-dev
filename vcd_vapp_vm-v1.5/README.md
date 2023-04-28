@@ -18,10 +18,10 @@ This Terraform module will deploy Virtual Machines into an existing VMware Cloud
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| vdc_org_name | Cloud Director Organization Name | string | "" | Yes |
-| vdc_group_name | Cloud Director Datacenter Group Name | string | "" | Yes |
-| vdc_name | Cloud Director VDC Name | string | "" | Yes |
-| vdc_edge_name | Cloud Director Edge Name | string | "" | Yes |
+| vdc_org_name | Name of the Data Center Group Organization | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name>"` | Yes |
+| vdc_group_name | Name of the Data Center Group | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | Yes |
+| vdc_name | Cloud Director VDC Name | string | `"Virtual Data Center Name Format: <Account_Number>-<Region>-<Segment Name>"` | Yes |
+| vcd_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | vm_sizing_policy_name | Cloud Director VM Sizing Policy Name | string | "gp2.4" | No |
 | vapp_org_network_name | Cloud Director vApp Organization Network Name | string | "Segment-01" | No |
 | catalog_name | Cloud Director Catalog Name | string | "" | Yes |
