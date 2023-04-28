@@ -1,22 +1,22 @@
 output "vm_info" {
   value = [
-    for vm in vcd_vapp_vm.this : {
-      name           = vm.name
-      ip_address     = vm.ip
-      computer_name  = vm.computer_name
-      metadata_entries = vm.metadata_entry
+    for vm in vcd_vapp_vm.vm : {
+      name              = vm.name
+      ip                = vm.network[*].ip
+      computer_name     = vm.computer_name
+      metadata_entries  = vm.metadata_entry
     }
   ]
 }
 
 output "all_vm_info" {
   value = {
-    for vm in vcd_vapp_vm.this :
+    for vm in vcd_vapp_vm.vm :
     vm.name => {
-      ip_address     = vm.ip
-      computer_name  = vm.computer_name
-      metadata       = vm.metadata_entry
-      sizing_policy  = data.vcd_vm_sizing_policy.sizing_policy.name
+      ip              = vm.network[*].ip
+      computer_name   = vm.computer_name
+      metadata        = vm.metadata_entry
+      sizing_policy   = data.vcd_vm_sizing_policy.sizing_policy.name
     }
   }
 }
