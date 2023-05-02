@@ -60,7 +60,7 @@ module "virtual_network_dhcp" {
         gateway         = "172.16.0.1"
         prefix_length   = 24
         dns_suffix      = "mydomain.com"
-        listener_ip_address = "172.16.0.10"
+        listener_ip_address = ""
         pool_ranges     = [
         {
             start_address = "172.16.0.101"
@@ -72,7 +72,7 @@ module "virtual_network_dhcp" {
       gateway         = "172.16.1.1"
       prefix_length   = 24
       dns_suffix      = "mydomain.com"
-      listener_ip_address = "172.16.1.10"
+      listener_ip_address = ""
       pool_ranges     = [
         {
             start_address = "172.16.1.101"
