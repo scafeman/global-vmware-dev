@@ -44,36 +44,36 @@ This Terraform module will deploy DHCP service on NSX-T Logical Routed Networks 
 This is an example of a `main.tf` file that uses the `virtual_network_dhcp` module to configure DHCP service on two NSX-T Logical Routed Networks in a VMware Cloud Director environment:
 
 ```terraform
-module "virtual_network_dhcp" {
-  source                = "github.com/example/virtual_network_dhcp.git?ref=v1.1.0"
+module "vcd_nsxt_network_dhcp" {
+  source                    = "github.com/global-vmware/vcd_nsxt_network_dhcp.git?ref=v1.1.0"
   
-  vdc_org_name                      = "<US1-VDC-ORG-NAME>"
-  vdc_group_name                    = "<US1-VDC-GRP-NAME>"
-  vcd_edgegateway_name              = "<US1-VDC-EDGE-NAME>"
+  vdc_org_name              = "<US1-VDC-ORG-NAME>"
+  vdc_group_name            = "<US1-VDC-GRP-NAME>"
+  vcd_edgegateway_name      = "<US1-VDC-EDGE-NAME>"
 
-  dhcp_mode             = "EDGE"
+  dhcp_mode                 = "EDGE"
 
-  dns_servers           = ["192.168.255.228"]
+  dns_servers               = ["192.168.255.228"]
 
   segments = {
     "US1-Segment-01" = {
-        gateway         = "172.16.0.1"
-        prefix_length   = 24
-        dns_suffix      = "mydomain.com"
+        gateway             = "172.16.0.1"
+        prefix_length       = 24
+        dns_suffix          = "mydomain.com"
         listener_ip_address = ""
-        pool_ranges     = [
+        pool_ranges         = [
         {
-            start_address = "172.16.0.101"
-            end_address   = "172.16.0.200"
+            start_address   = "172.16.0.101"
+            end_address     = "172.16.0.200"
         }
         ]    
     },
     "US1-Segment-02" = {
-      gateway         = "172.16.1.1"
-      prefix_length   = 24
-      dns_suffix      = "mydomain.com"
+      gateway             = "172.16.1.1"
+      prefix_length       = 24
+      dns_suffix          = "mydomain.com"
       listener_ip_address = ""
-      pool_ranges     = [
+      pool_ranges         = [
         {
             start_address = "172.16.1.101"
             end_address   = "172.16.1.200"
