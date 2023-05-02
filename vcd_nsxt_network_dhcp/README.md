@@ -29,7 +29,15 @@ This Terraform module will deploy DHCP pools into existing Data Center Group Rou
 | listener_ip_address | A map of DHCP listener IP addresses | string | null | no |
 | lease_time | DHCP lease time in seconds. | string | "2592000" | no |
 | dns_servers | A list of DNS server IP addresses to be assigned by this DHCP service. Maximum two values. | list(string) | null | yes |
-| segments | A map of network segments to configure DHCP on. The key is the name of the network segment and the value is a map of the segment properties. Valid segment properties are "gateway" (required), "prefix_length" (required), "dns_suffix" (required), "listener_ip_address" (optional), "pool_ranges" (optional). | map(object({ gateway = string, prefix_length = number, dns_suffix = string, listener_ip_address = string, pool_ranges = list(map(string)) })) | n/a | yes |
+| segments | A map of network segments to configure DHCP on. The key is the name of the network segment and the value is a map of the segment properties. Valid segment properties are "gateway" (required), "prefix_length" (required), "dns_suffix" (required), "listener_ip_address" (optional), "pool_ranges" (optional). | map(object({ gateway = string, prefix_length = number, dns_suffix = string, listener_ip_address = string, pool_ranges = list(map(string)) })) | `{<br> "US1-Segment-01" = {<br> gateway = "172.16.0.1"<br> prefix_length = 24<br> dns_suffix = "domain.com"<br> listener_ip_address = null<br> pool_ranges = [<br> {<br> start_address = "172.16.0.101"<br> end_address = "172.16.0.200"<br> }<br> ] <br> },<br> "US1-Segment-02" = {<br> gateway = "172.16.1.1"<br> prefix_length = 24<br> dns_suffix = "domain.com"<br> listener_ip_address = null<br> pool_ranges = [<br> {<br> start_address = "172.16.1.101"<br> end_address = "172.16.1.200"<br> }<br> ] <br> }<br>}` | yes |
+
+`NOTE:` Each object in the `segments` map must have the following attributes:
+
+`gateway`: The gateway IP address for the segment.
+`prefix_length`: The CIDR notation prefix length for the segment.
+`dns_suffix`: The DNS suffix for the segment.
+`listener_ip_address` (optional): The IP address of the DHCP listener for the segment. Listener IP Address is required when your are using the "NETWORK" DHCP Mode Only.
+`pool_ranges` (optional): A list of IP address ranges to be used for DHCP pools in the segment. If not specified, the module will automatically calculate a pool based on
 
 ## Outputs
 
