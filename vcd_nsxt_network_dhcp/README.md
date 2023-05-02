@@ -1,6 +1,6 @@
-## Virtual Network DHCP Terraform Module
+## DHCP Terraform Module for Routed Data Center Group Networks
 
-This Terraform module will deploy DHCP service on NSX-T Logical Routed Networks in an existing VMware Cloud Director (VCD) environment using the `vmware/vcd` provider. This module can be used to provision DHCP service on multiple network segments.
+This Terraform module will deploy DHCP pools into existing Data Center Group Routed Networks using the `vmware/vcd` provider. This module can be used to provision DHCP Services on multiple routed network segments.
 
 ## Requirements
 
@@ -22,9 +22,9 @@ This Terraform module will deploy DHCP service on NSX-T Logical Routed Networks 
 
 | Name                          | Description                                                          | Type   | Default           | Required |
 |-------------------------------|----------------------------------------------------------------------|--------|-------------------|----------|
-| vdc_group_name | Name of the Data Center Group | string | n/a | yes |
-| vdc_org_name | Name of the Data Center Group Organization | string | n/a | yes |
-| vdc_edge_name | Name of the NSX-T Edge Gateway | string | n/a | yes |
+| vdc_group_name | Name of the Data Center Group | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
+| vdc_org_name | Name of the Data Center Group Organization | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
+| vdc_edge_name | Name of the NSX-T Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | yes |
 | dhcp_mode | DHCP service mode. Valid values are "EDGE" (default), "NETWORK" or "RELAY". | string | "EDGE" | no |
 | listener_ip_address | A map of DHCP listener IP addresses | string | null | no |
 | lease_time | DHCP lease time in seconds. | string | "2592000" | no |
@@ -42,7 +42,7 @@ This Terraform module will deploy DHCP service on NSX-T Logical Routed Networks 
 
 ## Example Usage
 
-This is an example of a `main.tf` file that uses the `virtual_network_dhcp` module to configure DHCP service on two NSX-T Logical Routed Networks in a VMware Cloud Director environment:
+This is an example of a `main.tf` file that uses the `vcd_nsxt_network_dhcp` module to configure DHCP Services on Two Data Center Group Routed Networks that are using "EDGE" DHCP Mode in a VMware Cloud Director environment:
 
 ```terraform
 module "vcd_nsxt_network_dhcp" {
