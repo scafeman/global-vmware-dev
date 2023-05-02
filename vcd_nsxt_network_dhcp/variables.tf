@@ -4,16 +4,18 @@ variable "vdc_edge_name" {}
 
 variable "vdc_group_name" {}
 
-
 variable "dhcp_mode" {
+  type    = string
   default = "EDGE"
 }
 
 variable "listener_ip_address" {
+  type    = string
   default = null
 }
 
 variable "lease_time" {
+  type    = number
   default = "2592000"
 }
 

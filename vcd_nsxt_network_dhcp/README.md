@@ -26,6 +26,7 @@ This Terraform module will deploy DHCP service on NSX-T Logical Routed Networks 
 | vdc_org_name | Name of the Data Center Group Organization | string | n/a | yes |
 | vdc_edge_name | Name of the NSX-T Edge Gateway | string | n/a | yes |
 | dhcp_mode | DHCP service mode. Valid values are "EDGE" (default), "NETWORK" or "RELAY". | string | "EDGE" | no |
+| listener_ip_address | A map of DHCP listener IP addresses | string | null | no |
 | lease_time | DHCP lease time in seconds. | string | "2592000" | no |
 | dns_servers | A list of DNS server IP addresses to be assigned by this DHCP service. Maximum two values. | list(string) | null | yes |
 | segments | A map of network segments to configure DHCP on. The key is the name of the network segment and the value is a map of the segment properties. Valid segment properties are "gateway" (required), "prefix_length" (required), "dns_suffix" (required), "listener_ip_address" (optional), "pool_ranges" (optional). | map(object({ gateway = string, prefix_length = number, dns_suffix = string, listener_ip_address = string, pool_ranges = list(map(string)) })) | n/a | yes |
