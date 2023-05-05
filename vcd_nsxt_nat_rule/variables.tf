@@ -18,5 +18,21 @@ variable "nat_rules" {
     firewall_match            = optional(string)
     priority                  = optional(number)
   }))
-  default = {}
+  default = {
+    snat_rule = {
+      rule_type             = "SNAT"
+      name                  = "192.168.0.0/24_SNAT"
+      external_address      = "8.8.8.8"
+      internal_address      = "192.168.0.0/24"
+      logging               = false
+    },
+    dnat_rule = {
+      rule_type             = "DNAT"
+      name                  = "192.168.0.10_DNAT-HTTP"
+      external_address      = "8.8.8.8"
+      internal_address      = "192.168.0.10"
+      dnat_external_port    = "80"
+      logging               = false
+    }
+  }
 }
