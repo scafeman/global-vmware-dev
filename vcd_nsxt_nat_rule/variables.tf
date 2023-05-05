@@ -18,4 +18,5 @@ variable "nat_rules" {
     firewall_match            = optional(string)
     priority                  = optional(number)
   }))
+  default = {}
 }
