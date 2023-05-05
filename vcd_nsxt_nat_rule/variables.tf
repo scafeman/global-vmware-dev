@@ -5,7 +5,7 @@ variable "vdc_edge_name" {}
 variable "vdc_group_name" {}
 
 variable "nat_rules" {
-  type = map(object({
+  type = list(object({
     rule_type                 = string
     name                      = string
     description               = optional(string)
@@ -18,15 +18,15 @@ variable "nat_rules" {
     firewall_match            = optional(string)
     priority                  = optional(number)
   }))
-  default = {
-    snat_rule = {
+  default = [
+    {
       rule_type             = "SNAT"
       name                  = "192.168.0.0/24_SNAT"
       external_address      = "8.8.8.8"
       internal_address      = "192.168.0.0/24"
       logging               = false
     },
-    dnat_rule = {
+    {
       rule_type             = "DNAT"
       name                  = "192.168.0.10_DNAT-HTTP"
       external_address      = "8.8.8.8"
@@ -34,5 +34,5 @@ variable "nat_rules" {
       dnat_external_port    = "80"
       logging               = false
     }
-  }
+  ]
 }

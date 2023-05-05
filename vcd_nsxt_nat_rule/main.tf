@@ -21,11 +21,12 @@ data "vcd_nsxt_edgegateway" "t1" {
   name     = var.vdc_edge_name
 }
 
-# Create the vcd_nsxt_nat_rule resource block using for_each to loop through the nat_rules map
+
+# Create the vcd_nsxt_nat_rule resource block using for_each to loop through the nat_rules list
 resource "vcd_nsxt_nat_rule" "nat_rules" {
-  for_each                  = var.nat_rules
-  org                       = var.vdc_org_name
-  edge_gateway_id           = data.vcd_nsxt_edgegateway.t1.id
+  for_each         = { for rule in var.nat_rules : rule.name => rule }
+  org              = var.vdc_org_name
+  edge_gateway_id  = data.vcd_nsxt_edgegateway.t1.id
   name                      = each.value.name
   rule_type                 = each.value.rule_type
   description               = each.value.description
