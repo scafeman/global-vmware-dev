@@ -13,8 +13,8 @@ This Terraform module manages NSX-T Dynamic Security Groups in VMware Cloud Dire
 
 | Name                                                                 | Type         |
 |----------------------------------------------------------------------|--------------|
-| [vcd_vdc_group](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/data-sources/vdc_group)` | data source |
-| [vcd_nsxt_dynamic_security_group](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/resources/nsxt_dynamic_security_group)` | resource |
+| [vcd_vdc_group](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/data-sources/vdc_group) | data source |
+| [vcd_nsxt_dynamic_security_group](https://registry.terraform.io/providers/vmware/vcd/3.8.2/docs/resources/nsxt_dynamic_security_group) | resource |
 
 ## Inputs
 
