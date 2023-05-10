@@ -20,9 +20,9 @@ This Terraform module manages NSX-T Dynamic Security Groups in VMware Cloud Dire
 
 | Name            | Description                                                      | Type | Default | Required |
 |-----------------|------------------------------------------------------------------|------|---------|----------|
-| `vdc_org_name` | The name of the Data Center Group Organization in VCD | string | n/a | yes |
-| `vdc_group_name` | The name of the Data Center Group in VCD | string | n/a | yes |
-| `dynamic_security_groups` | A map of dynamic security groups to create in NSX-T. Each element of the map should contain a `description` field and a `criteria` list field, where each item in the `criteria` list should be a map containing `type`, `operator`, and `value` fields. | map(object({ description = string, criteria = list(any) })) | n/a | yes |
+| `vdc_org_name` | The name of the Data Center Group Organization in VCD | string | `"Organization Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
+| `vdc_group_name` | The name of the Data Center Group in VCD | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
+| `dynamic_security_groups` | A map of dynamic security groups to create in NSX-T. Each element of the map should contain a `description` field and a `criteria` list field, where each item in the `criteria` list should be a map containing `type`, `operator`, and `value` fields. | map(object({ description = string, criteria = list(any) })) | `{Web-Servers_Dynamic-SG = {description = "Web Servers Dynamic Security Group", criteria = [{type = "VM_TAG", operator = "EQUALS", value = "web"}]}, Database-Servers_Dynamic-SG = {description = "Database Servers Dynamic Security Group", criteria = [{type = "VM_TAG", operator = "EQUALS", value = "db"}]}}` | no |
 
 ## Outputs
 
