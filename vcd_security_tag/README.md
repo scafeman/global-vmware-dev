@@ -48,3 +48,7 @@ module "vcd_security_tags" {
   vm_names          = ["Prod App Web Server 01", "Prod App Web Server 02"]
 }
 ```
+
+## Authors
+
+This module is maintained by the [Global VMware Cloud Automation Services Team](https://github.com/global-vmware).
