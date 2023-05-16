@@ -13,8 +13,8 @@ This Terraform module allows you to create Security Tags and associate them with
 
 | Name                                                      | Type         |
 |-----------------------------------------------------------|--------------|
-| [vcd_security_tag](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/security_tag) | Resource |
 | [vcd_vm](https://registry.terraform.io/providers/vmware/vcd/latest/docs/data-sources/vm) | Data Source |
+| [vcd_security_tag](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/security_tag) | Resource |
 
 ## Inputs
 
