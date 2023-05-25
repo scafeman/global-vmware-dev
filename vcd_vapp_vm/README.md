@@ -29,14 +29,14 @@ This Module depends on a vApp already being created in your Virtual Data Center.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| vdc_org_name | The name of the Data Center Group Organization in VCD | string | "" | yes |
-| vdc_group_name | The name of the Data Center Group in VCD | string | "" | yes |
-| vdc_name | Cloud Director VDC Name | string | "" | yes |
-| vdc_edge_name | Name of the Data Center Group Edge Gateway | string | "" | yes |
+| vdc_org_name | The name of the Data Center Group Organization in VCD | string | `"Organization Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
+| vdc_group_name | The name of the Data Center Group in VCD | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
+| vdc_name | Cloud Director VDC Name | string | `"Virtual Data Center Name Format: <Account_Number>-<Region>-<Segment Name>"` | Yes |
+| vcd_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | vm_sizing_policy_name | Cloud Director VM Sizing Policy Name | string | "gp2.4" | no |
 | vapp_org_networks | List of vApp Org network names | list(object({ name = string })) | [] | yes |
-| catalog_name | Cloud Director Catalog Name | string | "" | yes |
-| catalog_template_name | Cloud Director Catalog Template Name | string | "" | yes |
+catalog_name | Cloud Director Catalog Name | string | `"VCD Catalog Name Format: <Account_Number>-<Region>-<catalog>"` | Yes |
+| catalog_template_name | Cloud Director Catalog Template Name | string | "" | Yes |
 | vapp_name | Cloud Director vApp Name | string | "" | yes |
 | vm_name_format | Format for the VM name | string | "%s %02d" | no |
 | vm_name | List of VM names | list(string) | [] | no |
@@ -46,12 +46,12 @@ This Module depends on a vApp already being created in your Virtual Data Center.
 | vm_memory_hot_add_enabled | Flag to enable or disable hot adding memory to VMs | bool | true | no |
 | vm_min_cpu | Minimum number of CPUs for each VM | number | 2 | no |
 | vm_count | Number of VMs to create | number | 2 | no |
-| vm_metadata_entries | List of metadata entries for the VM | list(object({ key = string, value = string, type = string, user_access = string, is_system = bool })) | [...] | no |
+| vm_metadata_entries | List of metadata entries for the VM | list(object({ key = string, value = string, type = string, user_access = string, is_system = bool })) | `[{ key = "Built By", value = "Terraform", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }, { key = "Operating System", value = "Ubuntu Linux (64-Bit)", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }, { key = "Server Role", value = "Web Server", type = "MetadataStringValue", user_access = "READWRITE", is_system = false }]` | No |
 | disks_per_vm | Number of disks to assign to each VM | number | 0 | no |
 | vm_disks | List of disks per virtual machine | list(object({ name = string, bus_number = number, unit_number = number })) | [] | no |
 | network_interfaces | List of network interfaces for the VM | list(object({ type = string, adapter_type = string, name = string, ip_allocation_mode = string, ip = string, is_primary = bool })) | [...] | no |
 | vm_ips_index_multiplier | Number of network interfaces for each VM deployment | number | 1 | no |
-| vm_ips | List of IP addresses to assign to VMs | list(string) | ["", ""] | no |
+| vm_ips | List of IP addresses to assign to VMs | list(string) | `["", ""]` | no |
 | override_template_disks | A list of disks to override in the vApp template | list(object({ bus_type = string, size_in_mb = number, bus_number = number, unit_number = number, iops = number, storage_profile = string })) | [] | no |
 | vm_customization_force | Specifies whether to force the customization even if the VM is powered on | bool | false | no |
 | vm_customization_enabled | Specifies whether to enable customization of the VM | bool | true | no |
@@ -69,12 +69,20 @@ This Module depends on a vApp already being created in your Virtual Data Center.
 | vm_customization_join_domain_account_ou | Organizational unit to be used for domain join. | string | null | no |
 | vm_customization_initscript | Provide initscript to be executed when customization is applied. | string | null | no |
 
+`NOTE:` Each object in the `vm_metadata_entries` list must have the following attributes:
+
+`key:` The key for the metadata entry.
+`value:` The value for the metadata entry.
+`type:` The type of the metadata value. The acceptable values are `"MetadataStringValue"`, `"MetadataNumberValue"`, `"MetadataDateTimeValue"`, `"MetadataBooleanValue"`.
+`user_access:` The level of access granted to users for this metadata entry. The acceptable values are `"READONLY"`, `"READWRITE"`.
+`is_system:` Specifies whether the metadata is system-generated or not. The acceptable values are `true`, `false`.
+
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| all_vm_info | An array of objects containing information about each VM |
-| vm_count | The count of VMs created |
+| all_vm_info | An array of objects containing information about each VM.  This includes VM Name, IP's, Computer Name, Metadata Entries, VM Sizing Policy and Named Disks that were Attached to the VM.|
+| vm_count | The number of VMs created. |
 
 ## Example Usage
 
