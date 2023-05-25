@@ -4,8 +4,10 @@ This Terraform module will deploy Virtual Machines into an existing Virtual Appl
 
 ## Requirements
 
-| terraform ~> | 1.2 |
-| vcd ~> | 3.8.2 | 
+| Name | Version |
+|------|---------|
+| terraform | ~> 1.2 |
+| vcd | ~> 3.8.2 |
 
 This Module depends on a vApp already being created in your Virtual Data Center. You can use the [vcd_vapp](https://github.com/global-vmware/vcd_vapp) Module to create the vApp that will be used to provision your VMs into.
 
