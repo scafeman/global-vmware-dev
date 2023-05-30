@@ -1,30 +1,25 @@
 variable "vdc_org_name" {
   type        = string
   description = "Cloud Director Organization Name"
-  default     = ""
 }
 
 variable "vdc_group_name" {
   type        = string
   description = "Cloud Director Datacenter Group Name"
-  default     = ""
 }
 
 variable "vdc_name" {
   type        = string
   description = "Cloud Director VDC Name"
-  default     = ""
 }
 
 variable "vdc_edge_name" {
   type        = string
   description = "Cloud Director Edge Name"
-  default     = ""
 }
 
 variable "vm_sizing_policy_name" {
   type = string
-  default = "gp2.4"
 }
 
 variable "vapp_org_networks" {
@@ -32,22 +27,18 @@ variable "vapp_org_networks" {
   type        = list(object({
     name = string
   }))
-  default     = []
 }
 
 variable "catalog_name" {
   type = string
-  default = ""
 }
 
 variable "catalog_template_name" {
   type = string
-  default = ""
 }
 
 variable "vapp_name" {
   type = string
-  default = "Production Application vApp"
 }
 
 variable "vm_name_format" {
@@ -59,7 +50,6 @@ variable "vm_name_format" {
 variable "vm_name" {
   type        = list(string)
   description = "List of VM names"
-  default     = []
 }
 
 variable "computer_name_format" {
@@ -71,7 +61,6 @@ variable "computer_name_format" {
 variable "computer_name" {
   type        = list(string)
   description = "List of computer names"
-  default     = []
 }
 
 variable "vm_cpu_hot_add_enabled" {
@@ -86,12 +75,12 @@ variable "vm_memory_hot_add_enabled" {
 
 variable "vm_min_cpu" {
   type = number
-  default = 2
+  default = 1
 }
 
 variable "vm_count" {
   type = number
-  default = 2
+  default = 1
 }
 
 variable "vm_metadata_entries" {
@@ -103,29 +92,7 @@ variable "vm_metadata_entries" {
     user_access = string
     is_system   = bool
   }))
-  default = [
-    {
-      key         = "Built By"
-      value       = "Terraform"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Operating System"
-      value       = "Ubuntu Linux (64-Bit)"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    },
-    {
-      key         = "Server Role"
-      value       = "Web Server"
-      type        = "MetadataStringValue"
-      user_access = "READWRITE"
-      is_system   = false
-    }
-  ]
+  default = []
 }
 
 variable "disks_per_vm" {
@@ -141,7 +108,7 @@ variable "vm_disks" {
     bus_number  = number
     unit_number = number
   }))
-  default     = []
+  default = []
 }
 
 variable "network_interfaces" {
@@ -154,24 +121,6 @@ variable "network_interfaces" {
     ip                  = string
     is_primary          = bool
   }))
-  default = [
-    {
-      type                = "org"
-      adapter_type        = "VMXNET3"
-      name                = "Segment-01"
-      ip_allocation_mode  = "POOL"
-      ip                  = ""
-      is_primary          = true
-    },
-    {
-      type                = "org"
-      adapter_type        = "VMXNET3"
-      name                = "Segment-02"
-      ip_allocation_mode  = "POOL"
-      ip                  = ""
-      is_primary          = false
-    }
-  ]
 }
 
 variable "vm_ips_index_multiplier" {
@@ -182,7 +131,6 @@ variable "vm_ips_index_multiplier" {
 
 variable "vm_ips" {
   type    = list(string)
-  default = ["", ""]
 }
 
 variable "override_template_disks" {
