@@ -16,6 +16,13 @@ output "org_vdc_routed_network_ids" {
 output "security_group_ids" {
   value = {
     for group_name, group in var.security_groups :
-    group_name => vcd_nsxt_security_group.security_group[group_name].id
+    group_name => {
+      id                    = vcd_nsxt_security_group.security_group[group_name].id
+      member_vms            = [
+        for vm in vcd_nsxt_security_group.security_group[group_name].member_vms :
+        vm.vm_name
+      ]
+      member_org_network_ids = vcd_nsxt_security_group.security_group[group_name].member_org_network_ids
+    }
   }
 }
