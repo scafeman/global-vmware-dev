@@ -26,10 +26,10 @@ This Terraform module deploys NSX-T Distributed Firewall Rules into an existing 
 | vdc_group_name | The name of the Data Center Group in VCD | string | - | yes |
 | vdc_edge_name | Name of the Data Center Group Edge Gateway | string | - | yes |
 | app_port_profiles | Map of app port profiles with their corresponding scopes | map(string) | {} | no |
-| ip_set_names | List of IP set names | list(string) | [] | no |
+| ip_set_names | List of IP set names | list(string) | [] | yes |
 | dynamic_security_group_names | List of dynamic security group names | list(string) | [] | no |
 | security_group_names | List of security group names | list(string) | [] | no |
-| rules | List of rules to apply | list(object({ name = string, direction = string, ip_protocol = string, action = string, enabled = optional(bool), logging = optional(bool), source_ids = optional(list(string)), destination_ids = optional(list(string)), app_port_profile_ids = optional(list(string)) })) | [] | no |
+| rules | List of rules to apply | list(object({ name = string, direction = string, ip_protocol = string, action = string, enabled = optional(bool), logging = optional(bool), source_ids = optional(list(string)), destination_ids = optional(list(string)), app_port_profile_ids = optional(list(string)) })) | [] | yes |
 
 ## Outputs
 
