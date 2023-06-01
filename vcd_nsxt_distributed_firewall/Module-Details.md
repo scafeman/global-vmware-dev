@@ -8,7 +8,6 @@ Data sources are used to fetch the data that already exists in your VCD environm
 
 - `vcd_vdc_group`: Fetches the Virtual Data Center (VDC) group data.
 - `vcd_nsxt_edgegateway`: Fetches the NSX-T Edge Gateway data.
-- `vcd_nsxt_firewall`: Fetches the existing NSX-T Data Center Edge Gateway Firewall rules.
 - `vcd_nsxt_app_port_profile`: Fetches application port profile data.
 - `vcd_nsxt_ip_set`: Fetches the NSX-T IP sets.
 - `vcd_nsxt_dynamic_security_group`: Fetches the dynamic security group data.
@@ -18,7 +17,7 @@ The data sources use `for_each` expressions to fetch multiple sets of data in pa
 
 ## Resource
 
-The `vcd_nsxt_firewall` resource manages the NSX-T Edge Gateway Firewall rules. It uses a `for_each` statement within a `dynamic` block to create a firewall rule for each entry in the `var.rules` list.
+The `vcd_nsxt_distributed_firewall` resource manages the NSX-T Distributed Firewall rules. It uses a `for_each` statement within a `dynamic` block to create a firewall rule for each entry in the `var.rules` list.
 
 The `source_ids`, `destination_ids`, and `app_port_profile_ids` use conditional expressions and the `try` function to set their values based on the provided input. If the input does not provide a list for these parameters, it defaults to `null`.
 
@@ -33,10 +32,10 @@ Several Terraform functions are used in this configuration:
 
 ## Input Variables
 
-Input variables are defined in the `variables.tf` file. These variables include the name of the VDC organization, the VDC group, and the edge gateway. Other variables define the app port profiles, IP set names, dynamic and static security group names, and the rules to apply to the Edge Gateway Firewall.
+Input variables are defined in the `variables.tf` file. These variables include the name of the VDC organization, the VDC group, and the edge gateway. Other variables define the app port profiles, IP set names, dynamic and static security group names, and the rules to apply to the Distributed Firewall.
 
-The `rules` variable is a list of objects. Each object has parameters like `name`, `direction`, `ip_protocol`, `action`, etc. Some of these parameters are optional and have default values set within the `vcd_nsxt_firewall` resource.
+The `rules` variable is a list of objects. Each object has parameters like `name`, `direction`, `ip_protocol`, `action`, etc. Some of these parameters are optional and have default values set within the `vcd_nsxt_distributed_firewall` resource.
 
 ## Summary
 
-This Terraform configuration is a robust example of how to manage NSX-T Edge Gateway rules in a VCD environment. It uses a combination of data sources, resources, variables, and functions to create a flexible and reusable configuration. The code allows for the dynamic creation and management of firewall rules based on input variables, providing an efficient and consistent way to manage network security.
+This Terraform configuration is a robust example of how to manage NSX-T Distributed Firewall rules in a VCD environment. It uses a combination of data sources, resources, variables, and functions to create a flexible and reusable configuration. The code allows for the dynamic creation and management of firewall rules based on input variables, providing an efficient and consistent way to manage network security.

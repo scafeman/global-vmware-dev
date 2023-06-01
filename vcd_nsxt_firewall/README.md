@@ -1,6 +1,6 @@
-# Terraform VMware Cloud Director Security Group Module
+# VCD NSX-T Edge Gateway Firewall Rules Terraform Module
 
-This Terraform module will deploy NSX-T Edge Gateway Firewall Rules in an existing VMware Cloud Director (VCD) environment. This module can be used to provsion new Edge Gateway Firewall Rules into [Rackspace Technology SDDC Flex](https://www.rackspace.com/cloud/private/software-defined-data-center-flex) VCD Data Center Regions.
+This Terraform module deploys NSX-T Edge Gateway Firewall Rules into an existing VMware Cloud Director (VCD) environment. It enables the provisioning of new Edge Gateway Firewall Rules into [Rackspace Technology SDDC Flex](https://www.rackspace.com/cloud/private/software-defined-data-center-flex) VCD Data Center Regions.
 
 ## Requirements
 
@@ -41,57 +41,47 @@ This Terraform module will deploy NSX-T Edge Gateway Firewall Rules in an existi
 ## Example Usage
 
 ```terraform
-module "vcd_nsxt_security_group" {
-  source = "github.com/global-vmware/vcd_nsxt_security_group.git?ref=v1.2.0"
+module "vcd_nsxt_firewall" {
+  source = "github.com/global-vmware/vcd_nsxt_firewall.git?ref=v1.1.0"
 
   vdc_org_name          = "<VDC-ORG-NAME>"
   vdc_group_name        = "<VDC-GRP-NAME>"
   vdc_edge_name         = "<VDC-EDGE-NAME>"
 
   app_port_profiles = {
-  "HTTP"        = "SYSTEM",
   "HTTPS"       = "SYSTEM",
-  "MS-SQL-S"    = "SYSTEM",
-  "MySQL"       = "SYSTEM",
-  "RDP"         = "SYSTEM",
-  "SSH"         = "SYSTEM",
-  "ICMP ALL"    = "SYSTEM"
   }
 
   ip_set_names = [
-  "US1-Segment-01-Network_172.16.0.0/24_IP-Set",
-  "US1-Segment-02-Network_172.16.1.0/24_IP-Set",
-  "US1-Segment-03-Network_172.16.2.0/24_IP-Set",
-  "US1-Segment-04-Network_172.16.3.0/24_IP-Set",
-  "US1-Segment-05-Network_172.16.4.0/24_IP-Set"
+    "US1-Segment-01-Network_172.16.0.0/24_IP-Set",
+    "US1-Segment-02-Network_172.16.1.0/24_IP-Set",
+    "US1-Segment-03-Network_172.16.2.0/24_IP-Set",
+    "US1-Segment-04-Network_172.16.3.0/24_IP-Set",
+    "US1-Segment-05-Network_172.16.4.0/24_IP-Set",
+    "Prod-App-NSXT-ALB-VIP"
   ]
-
-  dynamic_security_group_names = ["DynGroup1", "DynGroup2"]
-
-  security_group_names = ["Group1", "Group2"]
 
   rules = [
     {
-      name                 = "Rule1"
-      direction            = "Inbound"
-      ip_protocol          = "TCP"
-      action               = "Allow"
-      enabled              = true
-      logging              = false
-      source_ids           = ["Group1", "DynGroup1"]
-      destination_ids      = ["Group2", "DynGroup2"]
-      app_port_profile_ids = ["Profile1", "Profile2"]
+      name                  = "Allow_HTTPS-->Prod-App-NSXT-ALB-VIP"
+      direction             = "IN_OUT"
+      ip_protocol           = "IPV4"
+      action                = "ALLOW"
+      app_port_profile_ids  = ["HTTPS"]
+      destination_ids       = ["Prod-App-NSXT-ALB-VIP"]
     },
     {
-      name                 = "Rule2"
-      direction            = "Outbound"
-      ip_protocol          = "UDP"
-      action               = "Deny"
-      enabled              = true
-      logging              = true
-      source_ids           = []
-      destination_ids      = []
-      app_port_profile_ids = []
+      name                  = "Allow_Outbound-Internet"
+      direction             = "IN_OUT"
+      ip_protocol           = "IPV4"
+      action                = "ALLOW"
+      source_ids            = [
+        "US1-Segment-01-Network_172.16.0.0/24_IP-Set",
+        "US1-Segment-02-Network_172.16.1.0/24_IP-Set",
+        "US1-Segment-03-Network_172.16.2.0/24_IP-Set",
+        "US1-Segment-04-Network_172.16.3.0/24_IP-Set",
+        "US1-Segment-05-Network_172.16.4.0/24_IP-Set"
+      ]
     }
   ]
 }
