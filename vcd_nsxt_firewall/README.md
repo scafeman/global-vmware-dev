@@ -1,6 +1,6 @@
 # Terraform VMware Cloud Director Security Group Module
 
-This Terraform module allows you to create NSX-T Security Groups and firewall rules in an existing VMware Cloud Director (VCD) environment. The module utilizes the VMware vCD provider for Terraform and supports the creation of security groups and firewall rules for NSX-T Edge Gateways.
+This Terraform module will deploy NSX-T Edge Gateway Firewall Rules in an existing VMware Cloud Director (VCD) environment. This module can be used to provsion new Edge Gateway Firewall Rules into [Rackspace Technology SDDC Flex](https://www.rackspace.com/cloud/private/software-defined-data-center-flex) VCD Data Center Regions.
 
 ## Requirements
 
@@ -49,11 +49,22 @@ module "vcd_nsxt_security_group" {
   vdc_edge_name         = "<VDC-EDGE-NAME>"
 
   app_port_profiles = {
-    "Profile1" = "Scope1"
-    "Profile2" = "Scope2"
+  "HTTP"        = "SYSTEM",
+  "HTTPS"       = "SYSTEM",
+  "MS-SQL-S"    = "SYSTEM",
+  "MySQL"       = "SYSTEM",
+  "RDP"         = "SYSTEM",
+  "SSH"         = "SYSTEM",
+  "ICMP ALL"    = "SYSTEM"
   }
 
-  ip_set_names = ["IPSet1", "IPSet2"]
+  ip_set_names = [
+  "US1-Segment-01-Network_172.16.0.0/24_IP-Set",
+  "US1-Segment-02-Network_172.16.1.0/24_IP-Set",
+  "US1-Segment-03-Network_172.16.2.0/24_IP-Set",
+  "US1-Segment-04-Network_172.16.3.0/24_IP-Set",
+  "US1-Segment-05-Network_172.16.4.0/24_IP-Set"
+  ]
 
   dynamic_security_group_names = ["DynGroup1", "DynGroup2"]
 
