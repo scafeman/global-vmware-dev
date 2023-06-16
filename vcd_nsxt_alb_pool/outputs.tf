@@ -22,6 +22,10 @@ output "health_message" {
   value = vcd_nsxt_alb_pool.alb-pool.health_message
 }
 
+output "load_balancer_algorithm" {
+  value = var.algorithm
+}
+
 output "persistence_profile_name" {
   value = vcd_nsxt_alb_pool.alb-pool.persistence_profile[0].name
   description = "System generated name of Persistence Profile"
