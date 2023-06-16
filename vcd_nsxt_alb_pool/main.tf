@@ -20,13 +20,15 @@ data "vcd_nsxt_edgegateway" "edge_gateway" {
 }
 
 data "vcd_library_certificate" "ca-cert" {
-  alias = var.ca_certificate_name
+  for_each = var.ca_certificate_name != "" ? { ca_cert = var.ca_certificate_name } : {}
+  alias    = each.value
 }
 
 data "vcd_nsxt_ip_set" "ip-set" {
-  org             = var.vdc_org_name
-  edge_gateway_id = data.vcd_nsxt_edgegateway.edge_gateway.id
-  name            = var.member_group_ip_set_name
+  for_each         = var.member_group_ip_set_name != "" ? { ip_set = var.member_group_ip_set_name } : {}
+  org              = var.vdc_org_name
+  edge_gateway_id  = data.vcd_nsxt_edgegateway.edge_gateway.id
+  name             = each.value
 }
 
 resource "vcd_nsxt_alb_pool" "alb-pool" {
@@ -39,15 +41,15 @@ resource "vcd_nsxt_alb_pool" "alb-pool" {
   default_port                = var.default_port
   graceful_timeout_period     = var.graceful_timeout_period
   passive_monitoring_enabled  = var.passive_monitoring_enabled
-  ca_certificate_ids          = [data.vcd_library_certificate.ca-cert.id]
+  ca_certificate_ids          = var.ca_certificate_name != "" ? [data.vcd_library_certificate.ca-cert["ca_cert"].id] : []
   cn_check_enabled            = var.cn_check_enabled
   domain_names                = var.domain_names
 
   dynamic "persistence_profile" {
-    for_each    = var.persistence_profile
+    for_each = var.persistence_profile
     content {
-      type      = persistence_profile.value.type
-      value     = persistence_profile.value.value
+      type = persistence_profile.value.type
+      value = persistence_profile.value.type == "HTTP_COOKIE" || persistence_profile.value.type == "CUSTOM_HTTP_HEADER" || persistence_profile.value.type == "APP_COOKIE" ? persistence_profile.value.value : ""
     }
   }
 
@@ -68,5 +70,5 @@ resource "vcd_nsxt_alb_pool" "alb-pool" {
     }
   }
   
-  member_group_id  = var.use_member_group ? data.vcd_nsxt_ip_set.ip-set.id : null
+  member_group_id = var.use_member_group ? data.vcd_nsxt_ip_set.ip-set["ip_set"].id : null
 }

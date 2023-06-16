@@ -60,7 +60,7 @@ variable "algorithm" {
 variable "default_port" {
   description = "Default Port defines destination server port used by the traffic sent to the member"
   type        = number
-  default     = 443
+  default     = 80
 }
 
 variable "graceful_timeout_period" {
