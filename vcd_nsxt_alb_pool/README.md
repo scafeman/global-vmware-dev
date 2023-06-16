@@ -34,7 +34,7 @@ This Terraform module will deploy a NSX-T ALB Pool into an existing VMware Cloud
 | description | An optional description NSX-T ALB Pool | string | "" | no |
 | enabled | Boolean value if NSX-T ALB Pool should be enabled | bool | true | no |
 | algorithm | Optional algorithm for choosing pool members | string | "LEAST_CONNECTIONS" | no |
-| default_port | Default Port defines destination server port used by the traffic sent to the member | number | 443 | yes |
+| default_port | Default Port defines destination server port used by the traffic sent to the member | number | 80 | yes |
 | graceful_timeout_period | Maximum time in minutes to gracefully disable pool member | string | "1" | no |
 | passive_monitoring_enabled | Defines if client traffic should be used to check if pool member is up or down | bool | true | no |
 | ca_certificate_name | The name of the CA certificate | string | "" | no |
