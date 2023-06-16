@@ -62,7 +62,7 @@ This Terraform module will deploy a NSX-T ALB Pool into an existing VMware Cloud
 | lb_health_monitor_system_defined | A boolean flag if the Health monitor is system defined |
 | lb_member_group_ipset_name | The name of the IP set used for the member group in the ALB Pool |
 
-## Use Case Example #1 (Member Type: Ip Address)
+## Use Case Example #1 (Member Type: IP Address)
 
 This is an example of a `main.tf` file that uses the `"github.com/global-vmware/vcd_nsxt_alb_pool"` Module source to create a NSX-T ALB Pool that is using a Member Type of: `IP Address`.
 

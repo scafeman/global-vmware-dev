@@ -10,7 +10,7 @@ terraform {
 }
 
 data "vcd_vdc_group" "dcgroup" {
-  name = var.vdc_group_name
+  name      = var.vdc_group_name
 }
 
 data "vcd_nsxt_edgegateway" "edge_gateway" {
@@ -46,17 +46,17 @@ resource "vcd_nsxt_alb_pool" "alb-pool" {
   domain_names                = var.domain_names
 
   dynamic "persistence_profile" {
-    for_each = var.persistence_profile
+    for_each  = var.persistence_profile
     content {
-      type = persistence_profile.value.type
-      value = persistence_profile.value.type == "HTTP_COOKIE" || persistence_profile.value.type == "CUSTOM_HTTP_HEADER" || persistence_profile.value.type == "APP_COOKIE" ? persistence_profile.value.value : ""
+      type    = persistence_profile.value.type
+      value   = persistence_profile.value.type == "HTTP_COOKIE" || persistence_profile.value.type == "CUSTOM_HTTP_HEADER" || persistence_profile.value.type == "APP_COOKIE" ? persistence_profile.value.value : ""
     }
   }
 
   dynamic "health_monitor" {
-    for_each    = var.health_monitor
+    for_each  = var.health_monitor
     content {
-      type      = health_monitor.value.type
+      type    = health_monitor.value.type
     }
   }
 

@@ -7,18 +7,18 @@ variable "vdc_edge_name" {}
 variable "pool_name" {
   description = "A name for NSX-T ALB Pool"
   type        = string
-  default = ""
+  default     = ""
 }
 
 variable "members" {
-  description   = "List of pool members"
-  type          = list(object({
-    enabled     = bool
+  description = "List of pool members"
+  type        = list(object({
+    enabled   = bool
     ip_address  = string
-    port        = number
-    ratio       = number
+    port      = number
+    ratio     = number
   }))
-  default       = []
+  default     = []
 }
 
 variable "member_group_id" {
