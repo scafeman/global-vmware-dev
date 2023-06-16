@@ -7,16 +7,18 @@ variable "vdc_edge_name" {}
 variable "pool_name" {
   description = "A name for NSX-T ALB Pool"
   type        = string
+  default = ""
 }
 
 variable "members" {
-  description = "List of pool members"
-  type        = list(object({
-    enabled    = bool
-    ip_address = string
-    port       = number
-    ratio      = number
+  description   = "List of pool members"
+  type          = list(object({
+    enabled     = bool
+    ip_address  = string
+    port        = number
+    ratio       = number
   }))
+  default       = []
 }
 
 variable "member_group_id" {
@@ -58,6 +60,7 @@ variable "algorithm" {
 variable "default_port" {
   description = "Default Port defines destination server port used by the traffic sent to the member"
   type        = number
+  default     = 443
 }
 
 variable "graceful_timeout_period" {
@@ -92,15 +95,17 @@ variable "domain_names" {
 
 variable "persistence_profile" {
   description = "Persistence profile to ensure that the same user sticks to the same server for a desired duration of time"
-  type = list(object({
-    type = string
-    value = string
+  type        = list(object({
+    type      = string
+    value     = string
   }))
+  default     = []
 }
 
 variable "health_monitor" {
   description = "A block to define health monitor"
-  type = list(object({
-    type = string
+  type        = list(object({
+    type      = string
   }))
+  default     = []
 }
