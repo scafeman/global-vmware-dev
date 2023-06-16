@@ -9,8 +9,6 @@ variable "pool_name" {
   type        = string
 }
 
-
-
 variable "members" {
   description = "List of pool members"
   type        = list(object({
@@ -25,6 +23,18 @@ variable "member_group_id" {
   description = "A reference to NSX-T IP Set"
   type        = string
   default     = ""
+}
+
+variable "member_group_ip_set_name" {
+  description = "The name of the Member Group IP Set"
+  type        = string
+  default     = ""
+}
+
+variable "use_member_group" {
+  description = "Whether to use an IP set as pool members"
+  type        = bool
+  default     = false
 }
 
 variable "description" {
@@ -48,7 +58,6 @@ variable "algorithm" {
 variable "default_port" {
   description = "Default Port defines destination server port used by the traffic sent to the member"
   type        = number
-  default     = 80
 }
 
 variable "graceful_timeout_period" {
@@ -67,6 +76,18 @@ variable "ca_certificate_name" {
   description = "The name of the CA certificate"
   type        = string
   default     = ""
+}
+
+variable "cn_check_enabled" {
+  description = "Specifies whether to check the common name of the certificate presented by the pool member"
+  type        = bool
+  default     = false
+}
+
+variable "domain_names" {
+  description = "A set of domain names which will be used to verify the common names or subject alternative names presented by the pool member certificates"
+  type        = list(string)
+  default     = []
 }
 
 variable "persistence_profile" {

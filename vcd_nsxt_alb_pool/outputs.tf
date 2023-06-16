@@ -21,3 +21,23 @@ output "enabled_member_count" {
 output "health_message" {
   value = vcd_nsxt_alb_pool.alb-pool.health_message
 }
+
+output "persistence_profile_name" {
+  value = vcd_nsxt_alb_pool.alb-pool.persistence_profile[0].name
+  description = "System generated name of Persistence Profile"
+}
+
+output "health_monitor_type" {
+  value = vcd_nsxt_alb_pool.alb-pool.health_monitor[*].type
+  description = "Type of health monitor. One of HTTP, HTTPS, TCP, UDP, PING"
+}
+
+output "health_monitor_name" {
+  value = vcd_nsxt_alb_pool.alb-pool.health_monitor[*].name
+  description = "System generated name of Health monitor"
+}
+
+output "health_monitor_system_defined" {
+  value = vcd_nsxt_alb_pool.alb-pool.health_monitor[*].system_defined
+  description = "A boolean flag if the Health monitor is system defined"
+}
