@@ -1,6 +1,6 @@
-# Terraform VMware Cloud Director NSX-T ALB Pool Module
+# VCD NSX-T ALB Pool Module
 
-This Terraform module deploys an NSX-T ALB Pool into an existing VMware Cloud Director (VCD) environment. It can be used to provision a new ALB Pool, which represents a group of servers to which the load balancer can distribute traffic.
+This Terraform module will deploy a NSX-T ALB Pool into an existing VMware Cloud Director (VCD) environment. It can be used to provision a new ALB Pool, which represents a group of servers to which the load balancer can distribute traffic. This module can be used to provsion new ALB Pools into [Rackspace Technology SDDC Flex](https://www.rackspace.com/cloud/private/software-defined-data-center-flex) VCD Data Center Regions.
 
 ## Requirements
 
@@ -23,9 +23,9 @@ This Terraform module deploys an NSX-T ALB Pool into an existing VMware Cloud Di
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| vdc_org_name | The name of the Data Center Group Organization in VCD | string | - | yes |
-| vdc_group_name | The name of the Data Center Group in VCD | string | - | yes |
-| vdc_edge_name | Name of the Data Center Group Edge Gateway | string | - | yes |
+| vdc_org_name | The name of the Data Center Group Organization in VCD | string | `"Organization Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
+| vdc_group_name | The name of the Data Center Group in VCD | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
+| vcd_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | pool_name | A name for NSX-T ALB Pool | string | - | yes |
 | members | List of pool members | list(object({ enabled = bool, ip_address = string, port = number, ratio = number })) | - | yes |
 | member_group_id | A reference to NSX-T IP Set | string | "" | no |
