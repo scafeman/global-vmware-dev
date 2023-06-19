@@ -39,6 +39,12 @@ variable "is_transparent_mode_enabled" {
 variable "cert_alias" {
   description = "The alias of the certificate from the VCD library"
   type        = string
+  default     = ""
+}
+
+variable "ca_certificate_required" {
+  description = "Defines if a CA certificate is required for the virtual service. Set to true for HTTPS and L4_TLS types, and to false for HTTP and L4 types."
+  type        = bool
 }
 
 variable "service_ports" {

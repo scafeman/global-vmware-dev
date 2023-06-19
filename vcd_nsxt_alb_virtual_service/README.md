@@ -22,20 +22,22 @@ This Terraform module will deploy an NSX-T ALB (Advanced Load Balancer) Virtual 
 
 ## Inputs
 
-| Name                                | Description                                                                                             | Type       | Default     | Required |
-|-------------------------------------|---------------------------------------------------------------------------------------------------------|------------|-------------|----------|
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|----------|
 | vdc_org_name | The name of the Data Center Group Organization in VCD | string | `"Organization Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
 | vdc_group_name | The name of the Data Center Group in VCD | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
-| vcd_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
+| vdc_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | service_engine_group_name | The name of the NSX-T ALB Service Engine Group | string | `"Service Engine Group Name Format: <Region>-rsvc-lb-segroup<01>"` | yes |
 | pool_name | The name of the NSX-T ALB Pool | string | - | yes |
 | virtual_service_name | The name of the NSX-T ALB Virtual Service | string | - | yes |
 | virtual_service_description | The description of the NSX-T ALB Virtual Service | string | "" | no |
 | application_profile_type | The type of application profile for the NSX-T ALB Virtual Service | string | - | yes |
 | is_transparent_mode_enabled | Whether the transparent mode is enabled for the NSX-T ALB Virtual Service | bool | false | no |
-| cert_alias | The alias of the certificate from the VCD library | string | - | yes |
+| cert_alias | The alias of the certificate from the VCD library | string | "" | no |
+| ca_certificate_required | Defines if a CA certificate is required for the virtual service. Set to true for HTTPS and L4_TLS types, and to false for HTTP and L4 types. | bool | false | no |
 | service_ports | List of service ports configuration for the NSX-T ALB Virtual Service | list(object({ start_port = number, end_port = optional(number), type = string, ssl_enabled = optional(bool) })) | - | yes |
 | virtual_ip_address | IP Address for the service to listen on | string | - | yes |
+
 
 ## Outputs
 
@@ -59,16 +61,16 @@ module "nsxt_alb_virtual_service" {
   vdc_edge_name                 = "<US1-VDC-EDGE-NAME>"
   service_engine_group_name     = "<US1-VDC-SEGROUP-NAME>"
   
-  pool_name = "test-pool-01"
+  virtual_service_name          = "test-vip-01"
 
-  virtual_service_name = "test-vip-01"
-  virtual_service_description = ""
+  pool_name                     = "test-pool-01"
 
-  application_profile_type = "HTTPS"
+  application_profile_type      = "HTTPS"
 
-  cert_alias = "US1-domain.com-SSL-Certificate"
+  ca_certificate_required       = true
+  cert_alias                    = "US1-domain.com-SSL-Certificate"
 
-  virtual_ip_address = "204.232.237.200"
+  virtual_ip_address            = "204.232.237.200"
 
   service_ports = [
     {
