@@ -28,11 +28,11 @@ This Terraform module will deploy an IPSec VPN Tunnel on an NSX-T Edge Gateway i
 | name | The name of the IPSec VPN tunnel | string | - | yes |
 | description | The description of the IPSec VPN tunnel | string | "" | no |
 | enabled | Whether the IPSec VPN tunnel is enabled | bool | true | no |
-| pre_shared_key | The pre-shared key for authentication (used when authentication mode is PSK) | string | "" | no |
+| pre_shared_key | The pre-shared key for authentication (used when authentication mode is PSK) | string | "" | yes |
 | local_ip_address | The local IP address for the IPSec VPN tunnel | string | - | yes |
 | local_networks | List of local networks (CIDR blocks) to be included in the tunnel | list(string) | - | yes |
 | remote_ip_address | The remote IP address for the IPSec VPN tunnel | string | - | yes |
-| remote_id | The remote identifier for the IPSec VPN tunnel | string | - | yes |
+| remote_id | The remote identifier for the IPSec VPN tunnel | string | - | no |
 | remote_networks | List of remote networks (CIDR blocks) to be included in the tunnel | list(string) | ["0.0.0.0/0"] | no |
 | logging | Whether logging is enabled for the IPSec VPN tunnel | bool | false | no |
 | authentication_mode | The authentication mode for the IPSec VPN tunnel | string | "PSK" | no |
