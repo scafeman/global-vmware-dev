@@ -22,9 +22,9 @@ This Terraform module will deploy an IPSec VPN Tunnel on an NSX-T Edge Gateway i
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| vdc_org_name | The name of the Data Center Group Organization in VCD | string | - | yes |
-| vdc_group_name | The name of the Data Center Group in VCD | string | - | yes |
-| vdc_edge_name | Name of the Data Center Group Edge Gateway | string | - | yes |
+| vdc_org_name | The name of the Data Center Group Organization in VCD | string | `"Organization Name Format: <Account_Number>-<Region>-<Account_Name>"` | yes |
+| vdc_group_name | The name of the Data Center Group in VCD | string | `"Data Center Group Name Format: <Account_Number>-<Region>-<Account_Name> <datacenter group>"` | yes |
+| vdc_edge_name | Name of the Data Center Group Edge Gateway | string | `"Edge Gateway Name Format: <Account_Number>-<Region>-<Edge_GW_Identifier>-<edge>"` | Yes |
 | name | The name of the IPSec VPN tunnel | string | - | yes |
 | description | The description of the IPSec VPN tunnel | string | "" | no |
 | enabled | Whether the IPSec VPN tunnel is enabled | bool | true | no |
