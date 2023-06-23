@@ -37,6 +37,7 @@ variable "remote_ip_address" {
 
 variable "remote_id" {
   type = string
+  default = ""
 }
 
 variable "remote_networks" {
